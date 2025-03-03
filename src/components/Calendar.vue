@@ -166,6 +166,7 @@ function changeFamilySize() {
                 v-for="(day, index) in week"
                 :key="index"
                 class="day contain-content"
+                style="contain: content"
                 :class="{
                   'disabled-day': !day,
                 }"
