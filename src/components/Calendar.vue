@@ -4,6 +4,9 @@ import { DateTime } from 'luxon'
 import html2canvas from "html2canvas";
 import jsPDF from 'jspdf';
 const locale = ref('uk-UA');
+import Button from "primevue/button"
+import InputText from "primevue/inputtext"
+import Select from "primevue/select"
 
 const currentDate = ref(DateTime.now())
 
@@ -121,34 +124,29 @@ function changeFamilySize() {
   }
 }
 
+const localeOptions = [
+  { label: '🇺🇦', value: 'uk-UA' },
+  { label: '🇺🇸', value: 'en-US' },
+]
 </script>
 
 <template>
   <div class="p-16">
     <div class="flex gap-8 flex-row items-center">
-      <select v-model="locale" class="input">
-        <option value="uk-UA">🇺🇦</option>
-        <option value="en-US">🇺🇸</option>
-      </select>
-      <select v-model="count" class="input" @change="changeFamilySize">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+      <Select v-model="locale" class="input" :options="localeOptions" optionValue="value" optionLabel="label"/>
+      <Select v-model="count" class="input" @change="changeFamilySize" :options="[1,2, 3, 4, 5]"/>
       <div class="flex flex-row items-center gap-2">
 
         <label>Initials:</label>
-        <input type="text" class="input w-[4rem]" v-for="(_, index) in initials" v-model="initials[index]">
+        <InputText type="text" class="input w-[4rem]" v-for="(_, index) in initials" v-model="initials[index]"/>
       </div>
-      <button @click="downloadPDF" class="input bg-green-200 cursor-pointer">Download PDF</button>
+      <Button @click="downloadPDF">Download PDF</Button>
     </div>
     <div class="relative h-[290mm] w-[420mm]" id="calendar-container" style="zoom: 0.8">
       <div class="flex justify-between items-center p-2 h-16 w-full">
-        <button @click="previousMonth">&lt;</button>
+        <Button @click="previousMonth" outlined text severity="secondary">&lt;</Button>
         <h2 class="text-4xl">{{ monthName }} {{ currentDate.year }}</h2>
-        <button @click="nextMonth">&gt;</button>
+        <Button @click="nextMonth" outlined text severity="secondary">&gt;</Button>
       </div>
 
       <div class="flex flex-col align-top h-[94%] border-b-4 ">
