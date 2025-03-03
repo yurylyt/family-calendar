@@ -125,12 +125,11 @@ function changeFamilySize() {
 
 <template>
   <div class="p-16">
-    <div class="flex gap-2 flex-row items-center">
+    <div class="flex gap-8 flex-row items-center">
       <select v-model="locale" class="input">
         <option value="uk-UA">🇺🇦</option>
         <option value="en-US">🇺🇸</option>
       </select>
-      <button @click="downloadPDF" class="input bg-green-200 cursor-pointer">Download PDF</button>
       <select v-model="count" class="input" @change="changeFamilySize">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -138,8 +137,12 @@ function changeFamilySize() {
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <label>Initials:</label>
-      <input type="text" class="input w-[4rem]" v-for="(initial, index) in initials" v-model="initials[index]">
+      <div class="flex flex-row items-center gap-2">
+
+        <label>Initials:</label>
+        <input type="text" class="input w-[4rem]" v-for="(_, index) in initials" v-model="initials[index]">
+      </div>
+      <button @click="downloadPDF" class="input bg-green-200 cursor-pointer">Download PDF</button>
     </div>
     <div class="relative h-[290mm] w-[420mm]" id="calendar-container" style="zoom: 0.8">
       <div class="flex justify-between items-center p-2 h-16 w-full">
@@ -167,7 +170,7 @@ function changeFamilySize() {
                   'disabled-day': !day,
                 }"
             >
-              <div class="day-part" v-for="i in initials"></div>
+              <div class="day-part" v-for="_ in initials"></div>
               <div class="date absolute bottom-0 right-0">{{ day }}</div>
             </div>
           </template>
